@@ -1,0 +1,79 @@
+#NAME THE PIPELINE SAME AS FILE (WITHOUT ".yml")
+# trigger:
+# - main
+
+resources:
+ repositories:
+   - repository: self
+     trigger: none
+
+stages:
+- stage: Build
+  displayName: Build .Net Core Solution
+  jobs:
+  - job: Build
+    pool:
+       name: azureeshoponweb
+       demands: Agent.Name -equals eshopagent
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: 'restore'
+        projects: '**/*.sln'
+        feedsToUse: 'select'
+
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: 'build'
+        projects: '**/*.sln'
+
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: 'test'
+        projects: 'tests/UnitTests/*.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o $(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifacts ADO - Website
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: Website
+
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifacts ADO - Bicep
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/infra/webapp.bicep'
+        ArtifactName: 'Bicep'
+        publishLocation: 'Container'
+
+- stage: Deploy
+  displayName: Deploy to an Azure Web App
+  jobs:
+  - job: Deploy
+    pool:
+       name: azureeshoponweb
+       demands: Agent.Name -equals eshopagent
+    steps:
+     - task: DownloadBuildArtifacts@0
+       inputs:
+         buildType: 'current'
+         downloadType: 'single'
+         artifactName: 'Website'
+         downloadPath: '$(Build.ArtifactStagingDirectory)'
+     - task: AzureRmWebAppDeployment@4
+       inputs:
+         ConnectionType: 'AzureRM'
+         azureSubscription: 'AzureRM'
+         appType: 'webApp'
+         WebAppName: 'eshoponWebYAML369825031'
+         packageForLinux: '$(Build.ArtifactStagingDirectory)/**/Web.zip'
+         AppSettings: '-UseOnlyInMemoryDatabase true -ASPNETCORE_ENVIRONMENT Development'
