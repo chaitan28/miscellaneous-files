@@ -63,6 +63,15 @@ stages:
        name: azureeshoponweb
        demands: Agent.Name -equals eshopagent
     steps:
+     - task: AzureCLI@2
+       inputs:
+        azureSubscription: 'AzureRM' 
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+              az group create --name rg1-demo --location eastus
+              az appservice plan create --resource-group rg1-demo  --name  z400m03l07-sp1 --sku B3
+              az webapp create --resource-group rg104-demo --plan az400m03l07-sp1 --name eshoponWebYAML369825031
      - task: DownloadBuildArtifacts@0
        inputs:
          buildType: 'current'
