@@ -1,4 +1,6 @@
-### 1. Install Multiple JDKs in Jenkins
+### 1. Install Multiple JDKs in Jenkins:
+**JDK is a required dependency to build Java apps**
+- Your project might also declare runtime dependencies in pom.xml (Maven) or build.gradle (Gradle).
 Go to:
 Manage Jenkins → Global Tool Configuration → JDK <br>
 
@@ -33,7 +35,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'java -version'
-                sh './gradlew build' // or mvn package
+                sh 'echo Welcome'
             }
         }
     }
