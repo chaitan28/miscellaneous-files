@@ -40,3 +40,10 @@ pipeline {
 }
 
 ```
+### 3. Matrix-based security: 
+Manage Jenkins -> Security -> Authorization (select Matrix-based Security) <br>
+
+-> add user (fill username) -> give overall Read permission(as per your requirement) -> save <br>
+
+Example: We have provided ‘Read’ and ‘Build job’ permission only. <br>
+![jenkins-auth](auth-jenkins.jpg)
