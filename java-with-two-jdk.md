@@ -3,6 +3,7 @@
 - Your project might also declare runtime dependencies in pom.xml (Maven) or build.gradle (Gradle). <br>
 Go to: <br>
 **Manage Jenkins → System Configuration → Tools → JDK installations** <br>
+**Jobs default folder -> /var/lib/jenkins/jobs** 
 
 Click Add JDK twice (for each version)
 
