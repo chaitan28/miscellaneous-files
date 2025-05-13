@@ -36,7 +36,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'java -version'
-                sh 'echo Welcome new !'
+                sh 'echo Welcome !'
             }
         }
     }
