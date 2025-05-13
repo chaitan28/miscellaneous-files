@@ -98,7 +98,8 @@ Hello world
 ```
 
 ## Best Practices for Docker image creation/Best Practice Writing a Dockerfile <br>
-
+- Intermediate build artifacts can be copied between the stages using the COPY --from instruction. This technique helps to reduce
+the images size by excluding build tools and dependencies from the final image. <br>
 -  Use specific tags:                   Avoid latest to ensure predictable builds and compatibility. <br>
 -  Optimize image size:                 Use minimal base images and multi-stage builds to reduce the image footprint. <br>
 ```sh
