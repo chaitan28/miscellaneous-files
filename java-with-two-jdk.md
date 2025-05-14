@@ -49,4 +49,4 @@ Manage Jenkins -> Security -> Authorization (select Matrix-based Security) <br>
 -> add user (fill username) -> give overall Read permission(as per your requirement) -> save <br>
 
 Example: We have provided ‘Read’ and ‘Build job’ permission only. <br>
-![[auth-jenkins.jpg](https://github.com/chaitan28/miscellaneous-files.git)]
+![auth-jenkins](images/auth-jenkins.jpg)
