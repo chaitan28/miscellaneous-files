@@ -37,7 +37,7 @@ This README provides commonly used Azure CLI (`az`) commands for managing Azure 
  - appId (clientId) → The unique ID for the Service Principal.
  - password (clientSecret) → The secret key for authentication.
  - tenant → The Azure Directory Tenant ID
- - Azure console --> Microsoft EntraID --> App registrations
+ - Azure console --> Microsoft EntraID --> Manage --> App registrations
 
 - Modify your pipeline to use the Service Principal:
    ```bash
