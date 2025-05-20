@@ -30,6 +30,27 @@ This README provides commonly used Azure CLI (`az`) commands for managing Azure 
   az account set --subscription "<subscription-id>"
   ```
 
+- Run this command to create a Service Principal:
+   ```bash
+   az ad sp create-for-rbac --name "JenkinsSP" --role contributor --scopes /subscriptions/<your-subscription-id> 
+   ```
+ - appId (clientId) → The unique ID for the Service Principal.
+ - password (clientSecret) → The secret key for authentication.
+ - tenant → The Azure Directory Tenant ID
+ - in th azure console you see in Microsoft EntraID--> App registrations
+
+- Modify your pipeline to use the Service Principal:
+   ```bash
+   az login --service-principal -u <clientId> -p <clientSecret> --tenant <tenantId>
+   ```
+
+### **Solution 3: Use Managed Identity (if running on an Azure VM)**
+If your Jenkins server is an **Azure VM**, enable **Managed Identity**:
+```bash
+az login --identity
+```
+T
+
 ## 2. Resource Group Management
 - Show all resource groups
   ```sh
