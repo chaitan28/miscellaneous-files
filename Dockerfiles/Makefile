@@ -4,6 +4,7 @@ run:
 # 918MB
 build-naive:
 	docker build \
+	--no-cache  \
 	-f $(CURDIR)/Dockerfile.naive \
 	-t node-naive \
 	.
@@ -11,6 +12,7 @@ build-naive:
 # 142MB
 build-sl:
 	docker build \
+	--no-cache  \
 	-f $(CURDIR)/Dockerfile.slm \
 	-t node-slim \
 	.

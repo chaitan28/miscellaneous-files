@@ -3,21 +3,19 @@ FROM node:12-alpine
 # Create a non-root user
 RUN groupadd --gid 1001 apiuser && useradd --uid 1001 --gid 1001 -m apiuser
 
-# Switch to the new user
-USER apiuser
-
 # Set working directory
 WORKDIR /usr/src/app
 
-# Change ownership to non-root user
-RUN chown -R appuser:appgroup /usr/src/app
+# Change ownership of the app directory to the new user
+RUN chown -R apiuser:apiuser /usr/src/app
 
-# Switch to the non-root user
-USER appuser
+# Switch to non-root user
+USER apiuser
 
 # Copy files and install dependencies
 COPY package*.json ./
 RUN npm install
+
 COPY server.js ./
 
 # Run Node.js application as non-root
