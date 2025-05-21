@@ -1,5 +1,5 @@
 run:
-	docker run -i -d -p 8082:8082 node-naive 
+	docker run -d --name nodeimage1 -p 8082:8082 node-naive 
 
 # 918MB
 build-naive:
