@@ -1,7 +1,7 @@
 FROM node:12-alpine
 
 # Create a non-root user
-RUN groupadd --gid 1001 apiuser && useradd --uid 1001 --gid 1001 -m apiuser
+RUN addgroup --gid 1001 apiuser && adduser --uid 1001 --gid 1001 -m apiuser
 
 # Set working directory
 WORKDIR /usr/src/app
