@@ -21,3 +21,6 @@ build-alpine:
 	-f $(CURDIR)/Dockerfile.alpine \
 	-t node-alpine \
 	.
+# docker run --rm <docker-image> whoami
+user-check:
+	docker run --rm node-alpine whoami  
