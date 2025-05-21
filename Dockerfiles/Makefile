@@ -18,6 +18,7 @@ build-sl:
 # 89.3MB
 build-alpine:
 	docker build \
+	 --no-cache  \
 	-f $(CURDIR)/Dockerfile.alpine \
 	-t node-alpine \
 	.
