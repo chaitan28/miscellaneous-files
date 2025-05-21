@@ -1,7 +1,8 @@
 FROM node:12-alpine
 
 # Create a non-root user
-RUN addgroup --gid 1001 apiuser && adduser --uid 1001 --gid 1001 -m apiuser
+# RUN addgroup --gid 1001 apiuser && adduser --uid 1001 --gid 1001 -m apiuser
+RUN addgroup -g 1001 apiuser && adduser -u 1001 -G apiuser -s /bin/sh -D apiuser
 
 # Set working directory
 WORKDIR /usr/src/app
