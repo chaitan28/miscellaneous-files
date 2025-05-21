@@ -11,7 +11,7 @@ build-naive:
 # 142MB
 build-sl:
 	docker build \
-	-f $(CURDIR)/Dockerfile.slim \
+	-f $(CURDIR)/Dockerfile.slm \
 	-t node-slim \
 	.
 
