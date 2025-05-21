@@ -2,6 +2,9 @@ FROM node:12-alpine
 
 # Create a non-root user
 # RUN addgroup --gid 1001 apiuser && adduser --uid 1001 --gid 1001 -m apiuser
+# Named apiuser With UID 1001 Belonging to group apiuser Using /bin/sh as the default shell
+# addgroup: Adds a new group.-g 1001: Sets the GID (Group ID) to 1001. apiuser: The name of the group.
+# adduser: Adds a new user -u 1001: Sets the UID (User ID) to 1001. -G apiuser: Sets the primary group to apiuser. -s /bin/sh: Sets the default shell to /bin/sh. -D: Do not prompt for password or details (non-interactive).apiuser: The username to create.
 RUN addgroup -g 1001 apiuser && adduser -u 1001 -G apiuser -s /bin/sh -D apiuser
 
 # Set working directory
