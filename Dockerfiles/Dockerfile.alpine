@@ -1,8 +1,21 @@
 FROM node:12-alpine
+
+# Create a non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# Set working directory
 WORKDIR /usr/src/app
 
+# Change ownership to non-root user
+RUN chown -R appuser:appgroup /usr/src/app
+
+# Switch to the non-root user
+USER appuser
+
+# Copy files and install dependencies
 COPY package*.json ./
 RUN npm install
 COPY server.js ./
 
-CMD ["server.js" ]
+# Run Node.js application as non-root
+CMD ["node", "server.js"]
