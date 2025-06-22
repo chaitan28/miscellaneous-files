@@ -100,3 +100,9 @@ MySQL (database)
 | CORS           | Enables cross-origin access | Needed when ports/domains differ  |
 | Docker Compose | Networking setup            | Services can reference each other |
 
+---
+### Typical Workflow
+```
+User → React App (frontend) → Axios/Fetch → Spring Boot REST API (backend) → Database
+
+```
