@@ -45,14 +45,13 @@ A **Java Full Stack Application** is a web application built using **Java-based 
 ##  **Example Java Full Stack Application Structure**
 
 ```
-/project-root
-├── backend/ (Spring Boot App)
-│   ├── src/main/java/com/example/app
+/fullstack-app
+├── backend/         → Spring Boot (Maven)
 │   └── pom.xml
-│
-├── frontend/ (React/Angular App)
-│   ├── src/
+├── frontend/        → React.js (Node/NPM)
 │   └── package.json
+├── Jenkinsfile      → Pipeline script
+
 ```
 
 ---
@@ -105,4 +104,71 @@ MySQL (database)
 ```
 User → React App (frontend) → Axios/Fetch → Spring Boot REST API (backend) → Database
 
+```
+---
+
+### Jenkins Pipeline (Declarative) for Spring Boot + React
+```
+pipeline {
+    agent any
+
+    environment {
+        BACKEND_IMAGE = 'your-dockerhub-username/fullstack-backend'
+        FRONTEND_IMAGE = 'your-dockerhub-username/fullstack-frontend'
+        DOCKER_CREDENTIALS = credentials('dockerhub-creds') // Jenkins credentials ID
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-username/fullstack-app.git'
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('backend') {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
+
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    sh "docker build -t $BACKEND_IMAGE ./backend"
+                    sh "docker build -t $FRONTEND_IMAGE ./frontend"
+
+                    withDockerRegistry([credentialsId: 'dockerhub-creds', url: '']) {
+                        sh "docker push $BACKEND_IMAGE"
+                        sh "docker push $FRONTEND_IMAGE"
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sshagent(['deploy-ssh-key']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no user@your-server-ip << EOF
+                    docker pull $BACKEND_IMAGE
+                    docker pull $FRONTEND_IMAGE
+                    docker-compose -f /home/user/fullstack/docker-compose.yml up -d
+                    EOF
+                    '''
+                }
+            }
+        }
+    }
+}
 ```
