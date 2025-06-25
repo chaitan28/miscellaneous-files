@@ -67,6 +67,6 @@ pipeline {
 
 - Add a new library:<br>
 
-      Name: jenkins-shared-library (or your custom name)<br>
-      Source: Git repo URL <br>
-      Default version: main or master <br>
+      Name: jenkins-shared-library (or your custom name)
+      Source: Git repo URL 
+      Default version: main or master 
