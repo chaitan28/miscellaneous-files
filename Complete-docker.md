@@ -149,7 +149,7 @@ CMD ["python", "app.py"]           # Run the application
 -  Keep images secure:                  Regularly update base images to include the latest security patches.
 -  Scan for vulnerabilities:            Use tools like Trivy or Docker built-in scan before deployment to ensure security compliance.
 -  Try to avoid RUN apt get update -y or yum update -y in the Dockerfile.
--  File which so often change should be written at the end of the file. # example : COPY target/index.html /tmp/index.html
+-  File which so often change should be written at the end of the file. If index.html changes frequently and is near the top, Docker rebuilds everything after it — even if the rest didn't change. # example : COPY target/index.html /tmp/index.html
 
 
 ### Dockerfile for Python FrameWork
