@@ -149,7 +149,20 @@ CMD ["python", "app.py"]           # Run the application
 -  Keep images secure:                  Regularly update base images to include the latest security patches.
 -  Scan for vulnerabilities:            Use tools like Trivy or Docker built-in scan before deployment to ensure security compliance.
 -  Try to avoid RUN apt get update -y or yum update -y in the Dockerfile.
--  File which so often change should be written at the end of the file. If index.html changes frequently and is near the top, Docker rebuilds everything after it — even if the rest didn't change. # example : COPY target/index.html /tmp/index.html
+-  File which so often change should be written at the end of the file. If index.html changes frequently and is near the top, Docker rebuilds everything after it — even if the rest didn't change. # example : COPY target/index.html /tmp/index.html.
+- Add a dedicated user to avoid running containers as root.
+```sh
+  RUN useradd -m appuser
+  USER appuser
+```
+- Avoid Installing Unused Packages: Extra tools increase size and attack surface
+- Use environment variables, Docker secrets, or AWS/GCP/SSM integrations.
+- Prefer Alpine, Distroless, or slim Base versions:
+
+```sh
+  FROM node:18-alpine
+  FROM python:3.11-slim
+```
 
 
 ### Dockerfile for Python FrameWork
